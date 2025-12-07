@@ -61,6 +61,10 @@
     <Compile Include="Migrations\202512031250119_Initial-table-added.Designer.cs">
       <DependentUpon>202512031250119_Initial-table-added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202512071146175_foreignkey-updated-dataannotation-added.cs" />
+    <Compile Include="Migrations\202512071146175_foreignkey-updated-dataannotation-added.Designer.cs">
+      <DependentUpon>202512071146175_foreignkey-updated-dataannotation-added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +77,12 @@
     <EmbeddedResource Include="Migrations\202512031250119_Initial-table-added.resx">
       <DependentUpon>202512031250119_Initial-table-added.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202512071146175_foreignkey-updated-dataannotation-added.resx">
+      <DependentUpon>202512071146175_foreignkey-updated-dataannotation-added.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
