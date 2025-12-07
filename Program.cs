@@ -18,12 +18,7 @@ namespace LearingCodeFirst
         Console.WriteLine("Attempting to connect to database...");
         
         using (var context = new BillingDb())
-        {
-          // This will trigger the migration if needed
-          context.Database.Initialize(force: false);
-          
-          Console.WriteLine("Database connection successful!");
-          
+        {                    
           // Test basic functionality
           var customerCount = context.Customers.Count();
           var stockItemCount = context.StockItems.Count();
@@ -33,13 +28,43 @@ namespace LearingCodeFirst
           Console.WriteLine($"Customers: {customerCount}");
           Console.WriteLine($"Stock Items: {stockItemCount}");
           Console.WriteLine($"Invoices: {invoiceCount}");
-          
-          // Test if InvoiceNumber column exists by trying to query with it
-          var sampleInvoice = context.Invoices.FirstOrDefault();
-          if (sampleInvoice != null)
+
+          //get customers
+          //get stock items          
+          var customers = context.Customers.ToList();
+          var stockItems = context.StockItems.ToList();
+
+          //insert invoice with existing customer and stock item
+          //assuming at least one customer and two stock item exist
+          //in invoice number we will put random number
+          int invoiceNumber = new Random().Next(1000, 9999);
+
+          //create two invoice items with same invoice number
+          var invoiceItem1 = new Invoice
           {
-            Console.WriteLine($"Sample Invoice - ID: {sampleInvoice.Id}, Number: {sampleInvoice.InvoiceNumber}");
-          }
+            InvoiceNumber = invoiceNumber, //same invoice number
+            CustomerId = customers.First().Id,
+            StockItemId = stockItems.First().Id,
+            Quantity = 2,
+            SellingPrice = 19.99m,
+            InvoiceDate = DateTime.Now
+          };
+          var invoiceItem2 = new Invoice
+          {
+            InvoiceNumber = invoiceNumber, //same invoice number
+            CustomerId = customers.First().Id,
+            StockItemId = stockItems.Last().Id,
+            Quantity = 1, //added quantity for the second invoice
+            SellingPrice = 9.99m,
+            InvoiceDate = DateTime.Now
+          };
+
+          //add invoices
+          context.Invoices.Add(invoiceItem1);
+          context.Invoices.Add(invoiceItem2);
+          //save changes
+          context.SaveChanges();
+          Console.WriteLine("Invoices successfully added to the database."); //added confirmation message
         }
       }
       catch (Exception ex)
